@@ -1,7 +1,6 @@
-import aiohttp
 from dacite import from_dict
-from classes import Game
 
+from .classes import Game
 from .requestable import Requestable
 
 SEARCH_HEADERS = {
