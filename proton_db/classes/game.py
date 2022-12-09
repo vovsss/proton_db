@@ -14,9 +14,9 @@ class Game:
     supported_languages: str | None = None
     header_image: str | None = None
     website: str | None = None
-    pc_requirements: dict | None = None
-    mac_requirements: dict |  None = None
-    linux_requirements: dict | None = None
+    pc_requirements: dict | list | None = None
+    mac_requirements: dict | list | None = None
+    linux_requirements: dict | list | None = None
     developers: list | None = None
     publishers: list | None = None
     packages: list | None = None
