@@ -22,6 +22,9 @@ SEARCH_HEADERS = {
 }
 
 SEARCH_DATA = '{"query":"%game_name","attributesToHighlight":"","attributesToSnippet":"","facets":"tags","facetFilters":"appType:Game","hitsPerPage":50,"attributesToRetrieve":"lastUpdated,name,objectID,followers,oslist,releaseYear,tags,technologies,userScore","page":0}'
+SEARCH_BY_ID_DATA = '{"query":"","attributesToHighlight":[],"attributesToSnippet":[],"facets":["tags"],"facetFilters":[["appType:Game"]],"hitsPerPage":100,"attributesToRetrieve":["lastUpdated","name","objectID","followers","oslist","releaseYear","tags","technologies","userScore"],"filters":"(objectID:%game_id)"}'
+
+
 SEARCH_LINK = "https://94he6yatei-dsn.algolia.net"
 SEARCH_METHOD = "1/indexes/steamdb/query?x-algolia-agent=Algolia%20for%20JavaScript%20(4.13.0)%3B%20Browser"
 
@@ -34,6 +37,10 @@ class ProtonDB(Requestable):
         r = await self.get_json(f"proxy/steam/api/appdetails/", parameters={"appids": game_id})
         data = r[str(game_id)]["data"]
         return from_dict(Game, data)
+
+    async def get_proton_db_game_dict(self, game_id):
+        r = await self.search_engine.get_json(SEARCH_METHOD, "POST", data=SEARCH_BY_ID_DATA.replace("%game_id", str(game_id)))
+        return r["hits"][0]
 
     async def get_ids_from_name(self, name: str) -> list[int]:
         r = await self.search_engine.get_json(SEARCH_METHOD, method="POST", data=SEARCH_DATA.replace("%game_name",name))

@@ -6,7 +6,7 @@ class Game:
     type: str | None = None
     name: str | None = None
     steam_appid: int | None = None
-    required_age: int | None = None
+    required_age: int | None | str = None
     is_free: bool | None = None
     controller_support: str | None = None
     detailed_description: str | None = None
